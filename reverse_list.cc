@@ -44,6 +44,21 @@ Node *ReverseNode(Node * const _pNode) {
     return pPrevious;
 }
 
+Node *ReverseNode_(Node *pList) {
+    Node *pPrevious = nullptr;
+
+    while (pList) {
+        Node *pNext = pList->next;
+
+        pList->next = pPrevious;
+        pPrevious = pList;
+
+        pList = pNext;
+    }
+
+    return pPrevious;
+}
+
 void TestNode() {
     Node n1;
     Node n2(1);
@@ -58,7 +73,7 @@ void TestNode() {
     }
     (void) PrintNode(pRoot);
 
-    Node *newRoot = ReverseNode(pRoot);
+    Node *newRoot = ReverseNode_(pRoot);
     (void) PrintNode(newRoot);
 
     return;
