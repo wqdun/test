@@ -78,6 +78,40 @@ Node *RemoveNode(int target, Node *pList) {
     return pRoot;
 }
 
+Node *RemoveNode_(int target, Node *pList) {
+    // find new root
+    while (pList) {
+        if (pList->data == target) {
+            Node *toRemove = pList;
+
+            pList = pList->next;
+            delete toRemove;
+        }
+        else {
+            break;
+        }
+    }
+
+    Node *newRoot = pList;
+    Node *pPrevious = pList;
+    while (pList) {
+        if (pList->data == target) {
+            Node *toRemove = pList;
+
+            pPrevious->next = pList->next;
+            // pPrevious = pList;
+            pList = pList->next;
+            delete toRemove;
+        }
+        else {
+            pPrevious = pList;
+            pList = pList->next;
+        }
+    }
+
+    return newRoot;
+}
+
 int main(int argc, char const *argv[]) {
     std::vector<int> a {1, 2, 3, 1, 1, 1, 0, 1, -1};
     // a = {1};
@@ -85,7 +119,8 @@ int main(int argc, char const *argv[]) {
     Node *pList = CreateList(a);
 
     (void) PrintNode(pList);
-    Node *removed = RemoveNode(1, pList);
+    // Node *removed = RemoveNode(1, pList);
+    Node *removed = RemoveNode_(1, pList);
     std::cout << "removed: " << static_cast<void *>(removed) << ".\n";
     (void) PrintNode(removed);
 
