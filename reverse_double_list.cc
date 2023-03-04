@@ -77,6 +77,23 @@ Dnode *Reverse(Dnode *root) {
     return root;
 }
 
+Dnode *Reverse_(Dnode *root) {
+    Dnode *p = root;
+
+    Dnode *prev_ = nullptr;
+    while (p) {
+        Dnode *next = p->next;
+
+        p->prev = next;
+        p->next = prev_;
+
+        prev_ = p;
+        p = next;
+    }
+
+    return root;
+}
+
 
 int main(int argc, char const *argv[]) {
     std::vector<int> a {1, 2, 5, 4, 3, 0};
@@ -87,7 +104,7 @@ int main(int argc, char const *argv[]) {
     Dnode *front = BackwardTraverse(back);
 
     (void) ForwardTraverse(root);
-    (void) Reverse(root);
+    (void) Reverse_(root);
     (void) BackwardTraverse(root);
 
     return 0;

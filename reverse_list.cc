@@ -59,6 +59,22 @@ Node *ReverseNode_(Node *pList) {
     return pPrevious;
 }
 
+Node *ReverseNode__(Node *pList) {
+    Node *p = pList;
+
+    Node *prev_ = nullptr;
+    while (p) {
+        Node *next = p->next;
+
+        p->next = prev_;
+
+        prev_ = p;
+        p = next;
+    }
+
+    return prev_;
+}
+
 void TestNode() {
     Node n1;
     Node n2(1);
