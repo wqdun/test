@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <list>
-
+#include <queue>
 
 class Node {
 public:
@@ -86,17 +86,47 @@ Node *MergeSort(Node *l1, Node *l2) {
     return l3->next;
 }
 
+Node *MergeListsUsingPrioQueue(Node *l1, Node *l2) {
+    std::priority_queue<int> prioQ;
+
+    while (l1) {
+        prioQ.push(l1->data);
+        l1 = l1->next;
+    }
+    while (l2) {
+        prioQ.push(l2->data);
+        l2 = l2->next;
+    }
+    std::cout << "size: " << prioQ.size() << "\n";
+
+    if (prioQ.empty()) {
+        return nullptr;
+    }
+
+    Node *l3 = new Node();
+    Node *p = l3;
+    while (!prioQ.empty()) {
+        p->next = new Node(prioQ.top());
+        p = p->next;
+        prioQ.pop();
+    }
+
+    return l3->next;
+}
+
 
 int main(int argc, char const *argv[]) {
     const std::vector<int> a {0, 5, -1, 7};
     Node *l = CreateList(a);
     (void) PrintList(l);
 
-    Node *l1 = CreateList(std::vector<int> {});
-    Node *l2 = CreateList(std::vector<int> {});
+    Node *l1 = CreateList(std::vector<int> {1, 5, 33});
+    Node *l2 = CreateList(std::vector<int> {5, 6, 8, 90});
 
     Node *l3 = MergeSort(l1, l2);
     (void) PrintList(l3);
 
+    l3 = MergeListsUsingPrioQueue(l1, l2);
+    (void) PrintList(l3);
     return 0;
 }
