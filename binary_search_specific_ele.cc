@@ -81,6 +81,58 @@ int GetLeftSide(const std::vector<int> &arr, int start) {
     return 0;
 }
 
+int GetLeftSideUsingBSearch(const std::vector<int> &arr, int left, int right) {
+    if (left > right) {
+        return -1;
+    }
+
+    if (left == arr[left]) {
+        return left;
+    }
+
+    size_t mid = left + (right - left) / 2;
+    if (mid == arr[mid]) {
+        if (0 == mid) {
+            return mid;
+        }
+        if ((mid - 1) != arr[mid - 1]) {
+            return mid;
+        }
+
+        return GetLeftSideUsingBSearch(arr, left, mid - 1);
+    }
+    // mid > arr[mid]
+    else {
+        return GetLeftSideUsingBSearch(arr, mid + 1, right);
+    }
+}
+
+int GetRightSideUsingBSearch(const std::vector<int> &arr, int left, int right) {
+    if (left > right) {
+        return -1;
+    }
+
+    if (right == arr[right]) {
+        return right;
+    }
+
+    size_t mid = left + (right - left) / 2;
+    if (mid == arr[mid]) {
+        if ((arr.size() - 1) == mid) {
+            return mid;
+        }
+        if ((mid + 1) != arr[mid + 1]) {
+            return mid;
+        }
+
+        return GetRightSideUsingBSearch(arr, mid + 1, right);
+    }
+    // mid < arr[mid]
+    else {
+        return GetRightSideUsingBSearch(arr, mid, right - 1);
+    }
+}
+
 int GetRightSide(const std::vector<int> &arr, int start) {
     if (start < 0) {
         return -1;
@@ -99,7 +151,7 @@ int GetRightSide(const std::vector<int> &arr, int start) {
 
 
 int main(int argc, char const *argv[]) {
-    const std::vector<int> arr {};
+    std::vector<int> arr {};
 
     int start = BinarySearchTheOne(arr, 0, arr.size() - 1);
     std::cout << start << "\n";
@@ -107,5 +159,9 @@ int main(int argc, char const *argv[]) {
     int leftIndex = GetLeftSide(arr, start);
     int rightIndex = GetRightSide(arr, start);
     std::cout << leftIndex << "; " << rightIndex << "\n";
+
+    arr = {0, 1};
+    std::cout << GetLeftSideUsingBSearch(arr, 0, arr.size() - 1) << "\n";
+    std::cout << GetRightSideUsingBSearch(arr, 0, arr.size() - 1) << "\n";
     return 0;
 }
