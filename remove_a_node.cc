@@ -120,7 +120,7 @@ int main(int argc, char const *argv[]) {
 
     (void) PrintNode(pList);
     // Node *removed = RemoveNode(1, pList);
-    Node *removed = RemoveNode_(1, pList);
+    Node *removed = RemoveNode_(2, pList);
     std::cout << "removed: " << static_cast<void *>(removed) << ".\n";
     (void) PrintNode(removed);
 
